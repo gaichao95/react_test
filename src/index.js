@@ -14,6 +14,8 @@ import './index.css';
 //     );
 //   }
 // }
+// 定义棋盘大小N*N
+const N = 3
 
 function Square(props) {
   return (
@@ -60,7 +62,7 @@ class Game extends React.Component {
     this.state = {
       history: [
         {
-          squares: Array(9).fill(null),
+          squares: Array(N * N).fill(null),
           x: null,
           y: null,
         }
@@ -81,8 +83,8 @@ class Game extends React.Component {
     this.setState({
       history: history.concat([{
         squares: squares,
-        x: (i % 3) + 1,
-        y: Math.ceil(i / 3),
+        x: (i % N) + 1,
+        y: Math.ceil(i / N),
       }]),
       xIsNext: !this.state.xIsNext,
       stepNumber: history.length,
@@ -107,7 +109,11 @@ class Game extends React.Component {
         'Go to game start';
       return (
         <li key={move}>
-          <button onClick={() => this.jumpTo(move)}>{desc}</button>
+          <button onClick={() => this.jumpTo(move)}
+                  className={move === this.state.stepNumber ? 'is-click' : ''}
+          >
+            {desc}
+          </button>
         </li>
       );
     });
